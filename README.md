@@ -18,7 +18,7 @@ The exercises are developed in an SAP ABAP Cloud training environment using Ecli
 |---|---|---|
 | 1 – Copy and Understand a Template Class | `ZCL_3964_SOLUTION` | Copy and examine a template ABAP class to understand its structure and implementation. |
 | 2 – Perform a Code Analysis Using the ABAP Test Cockpit | `Z3964_VARIANT` | Configure and use an ATC (ABAP Test Cockpit) check variant to perform extended program checks and analyze ABAP code. |
-| 3 – Implement and Run an ABAP Unit Test | To be added | Implement and execute automated unit tests using ABAP Unit to verify expected program behavior. |
+| 3 – Implement and Run an ABAP Unit Test | To be added | Define and implement an ABAP Unit test for method `find_cargo_flight` of local class `lcl_carrier` to further analyze this issue. |
 
 *Additional exercises and implementations will be documented as the course progresses.*
 
