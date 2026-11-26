@@ -12,8 +12,6 @@ The exercises are developed in an SAP ABAP Cloud training environment using Ecli
 
 ## Exercises and Implementations
 
-### Unit 1 – Analyzing and Testing Code
-
 | Exercise | ABAP Object | Description |
 |---|---|---|
 | 1 – Copy and Understand a Template Class | `ZCL_3964_SOLUTION` | Copy and examine a template ABAP class to understand its structure and implementation. |
