@@ -17,6 +17,7 @@ The exercises are developed in a SAP BTP, ABAP Environment using Eclipse ADT (AB
 | 1 – Copy and Understand a Template Class | `ZCL_3964_SOLUTION` | Copy and examine a template ABAP class to understand its structure and implementation. |
 | 2 – Perform a Code Analysis Using the ABAP Test Cockpit | `Z3964_VARIANT` | Configure and use an ATC (ABAP Test Cockpit) check variant to perform extended program checks and analyze ABAP code. |
 | 3 – Implement and Run an ABAP Unit Test | `ZCL_3964_SOLUTION` | Define and implement an ABAP Unit test for method `find_cargo_flight` of local class `lcl_carrier` to further analyze this issue. |
+| 4 - Detect Performance Issues Using ABAP Profiling | `ZCL_3964_SOLUTION` | perform a runtime analysis using ABAP Profiling and improve the performance of code. |
 
 ## Prerequisites and Development Environment
 
