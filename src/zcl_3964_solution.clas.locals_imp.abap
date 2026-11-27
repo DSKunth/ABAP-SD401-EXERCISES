@@ -48,6 +48,18 @@ CLASS lcl_passenger_flight DEFINITION .
 
   PROTECTED SECTION.
   PRIVATE SECTION.
+    TYPES: BEGIN OF st_flights_buffer,
+             carrier_id     TYPE /lrn/passflight-carrier_id,
+             connection_id  TYPE /lrn/passflight-connection_id,
+             flight_date    TYPE /lrn/passflight-flight_date,
+             plane_type_id  TYPE /lrn/passflight-plane_type_id,
+             seats_max      TYPE /lrn/passflight-seats_max,
+             seats_occupied TYPE /lrn/passflight-seats_occupied,
+             price          TYPE /lrn/passflight-price,
+             currency_code  TYPE /lrn/passflight-currency_code,
+           END OF st_flights_buffer.
+
+    CLASS-DATA: flights_buffer TYPE TABLE OF st_flights_buffer.
 
     DATA planetype TYPE /dmo/plane_type_id.
 
@@ -68,14 +80,16 @@ CLASS lcl_passenger_flight IMPLEMENTATION.
 
     SELECT
       FROM /lrn/passflight
-    FIELDS carrier_id, connection_id, flight_date
+    FIELDS carrier_id, connection_id, flight_date,
+           plane_type_id, seats_max, seats_occupied,
+           price, currency_code
      WHERE carrier_id    = @i_carrier_id
-      INTO TABLE @DATA(keys).
+      INTO TABLE @flights_buffer.
 
-    LOOP AT keys INTO DATA(key).
-      APPEND NEW lcl_passenger_flight( i_carrier_id    = key-carrier_id
-                                       i_connection_id = key-connection_id
-                                       i_flight_date   = key-flight_date )
+    LOOP AT FLIGHTS_BUFFER INTO DATA(flight).
+      APPEND NEW lcl_passenger_flight( i_carrier_id    = flight-carrier_id
+                                       i_connection_id = flight-connection_id
+                                       i_flight_date   = flight-flight_date )
               TO r_result.
     ENDLOOP.
 
@@ -84,15 +98,23 @@ CLASS lcl_passenger_flight IMPLEMENTATION.
 
   METHOD constructor.
 
+  TRY.
+    DATA(flight_raw) = flights_buffer[ carrier_id    = i_carrier_id
+                                     connection_id = i_connection_id
+                                     flight_date   = i_flight_date ].
+    CATCH cx_sy_itab_line_not_found.
+
     SELECT SINGLE
       FROM /lrn/passflight
     FIELDS plane_type_id, seats_max, seats_occupied, price, currency_code
      WHERE carrier_id    = @i_carrier_id
        AND connection_id = @i_connection_id
        AND flight_date   = @i_flight_date
-      INTO @DATA(flight_raw).
+      INTO CORRESPONDING FIELDS OF @flight_raw.
 
-    IF sy-subrc = 0.
+  ENDTRY.
+
+    IF flight_raw IS NOT INITIAL.
       me->carrier_id    = i_carrier_id.
       me->connection_id = i_connection_id.
       me->flight_date   = i_flight_date.
